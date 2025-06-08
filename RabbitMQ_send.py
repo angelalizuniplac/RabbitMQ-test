@@ -14,7 +14,7 @@ credentials = pika.PlainCredentials('user', 'password')  # 'guest', 'guest'
 # - 5672: porta padrão do RabbitMQ para conexões AMQP
 # - '/': virtual host padrão (como um namespace) Ex.: /app-vendas, /app-estoque, /prod, dev etc...
 # - credentials: as credenciais criadas acima
-parameters = pika.ConnectionParameters('localhost', 5672, 'dev', credentials)
+parameters = pika.ConnectionParameters('localhost', 5672, '/', credentials)
 
 # Estabelece conexão SÍNCRONA com o RabbitMQ usando os parâmetros
 # BlockingConnection fica "travado" aqui até conseguir conectar
@@ -29,9 +29,8 @@ connection = pika.BlockingConnection(parameters)
 channel = connection.channel()
 
 # Declara/cria uma fila chamada 'filaTeste'
-# Se a fila já existir, nada acontece
-# Se não existir, ela é criada
-channel.queue_declare(queue='filaTesteDev')  # declara a fila
+# Se a fila já existir, nada acontece. Se não existir, ela é criada
+channel.queue_declare(queue='filaTeste')  # declara a fila
 #FIM DA CONFIGURAÇÃO DO CANAL
 
 # PREPARAÇÃO DA MENSAGEM
